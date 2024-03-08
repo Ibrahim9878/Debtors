@@ -87,18 +87,14 @@ List<Debtor> debtors = new List<Debtor> {
 //debtors5.ForEach(d => Console.WriteLine(d));
 #endregion
 #region task 8
-//mellim tam yaza bilmedim anlamadim 
-//int count = debtors.Count;
 //8) Borcu, umumi borclarin orta borcunnan cox olan borclulari cixarmaq ve evvel familyaya gore sonra ise meblegin azalmagina gore sortirovka etmek
-//int orta= 0;
-//foreach (var item in debtors)
-//{
-//    orta += item.Debt;
-//}
-//var debtors6 = debtors.Where(d => d.Debt > orta).ToList();
+//var debtors6 = debtors.Where(d => d.Debt > debtors.Average(d => d.Debt)).ToList();
+//debtors6.Sort((d1,d2) => d2.FullName.CompareTo(d1.FullName));
+//debtors6.Sort((d1,d2) => d2.Debt.CompareTo(d1.Debt));
 //debtors6.ForEach(d => Console.WriteLine(d));
-//debtors6.Sort();
-//debtors6.ForEach(d => Console.WriteLine(d));
+
+
+
 #endregion
 #region task 9
 //9) Telefon nomresinde 8 olmayan borclularin yalniz familyasin,yashin ve umumi borcun meblegin cixarmaq
@@ -121,34 +117,44 @@ List<Debtor> debtors = new List<Debtor> {
 //debtors8.ForEach(d => Console.WriteLine(d));
 #endregion
 #region task 13
-//yaza bilmedim
 //13)borclulardan en coxu hansi ilde dogulubsa hemin ili cixartmaq
-int il = debtors[0].BirthDay.Year;
-//for (int i = 0; i < debtors.Count; i++)
-//{
-//    for (int j = 0; j < debtors.Count; j++)
-//    {
-//        if (il == debtors[j].BirthDay.Year)
-//            il = debtors[j].BirthDay.Year;
-//    }
-//}
-//Console.WriteLine(il);
-//var debtors9 = debtors.Where(d=> d.BirthDay.Year )
+//Console.WriteLine(debtors.GroupBy(d => d.BirthDay.Year).OrderByDescending(g => g.Count()).First().Key);
+
+
 #endregion
 #region task 14
-//ysxs bilmedim
 //14)Borcu en boyuk olan 5 borclunun siyahisini cixartmaq
-//var debtors10 = debtors.Where(d=> 
-//{
-//})
-#endregion
-#region task 14
+//var deptors6 = debtors.OrderByDescending(d => d.Debt).Take(5).ToList();
+
 #endregion
 #region task 15
+//15)Butun borcu olanlarin borcunu cemleyib umumi borcu cixartmaq
+//var debtors6 = debtors.Sum(g => g.Debt);
+//Console.WriteLine(debtors6);
 #endregion
 #region task 16
+//16)2ci dunya muharibesin gormush borclularin siyahisi cixartmaq
+//var debtors6 = debtors.Where(d => d.BirthDay.Year < 1939).ToList();
+//debtors6.ForEach(d => Console.WriteLine(d.ToString()));
+
 #endregion
 #region task 18
+//18)Nomresinde tekrar reqemler olmayan borclularin ve onlarin borcunun meblegin cixartmaq
+debtors.Where(d => d.Phone.ToCharArray().GroupBy(c =>c).Any(g => g.Count() > 1));
+double totalDebtAmount = debtors.Sum(d => d.Debt);
+
+#endregion
+#region task 19
+//19)Tesevvur edek ki, butun borclari olanlar bugunden etibaren her ay 500 azn pul odeyecekler. Oz ad gunune kimi borcun oduyub qurtara bilenlerin siyahisin cixartmaq
+List<Debtor>? result = debtors.Where((d) =>
+{
+
+    var month = Math.Abs(DateTime.Now.Month - d.BirthDay.Month);
+    var r = month * 500;
+    return d.Debt <= r;
+}.Tolist();
+
+result.ForEach((Debtor d) => Console.WriteLine(d));
 #endregion
 #region task 19
 #endregion
