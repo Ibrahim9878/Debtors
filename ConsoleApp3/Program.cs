@@ -145,18 +145,38 @@ double totalDebtAmount = debtors.Sum(d => d.Debt);
 
 #endregion
 #region task 19
-//19)Tesevvur edek ki, butun borclari olanlar bugunden etibaren her ay 500 azn pul odeyecekler. Oz ad gunune kimi borcun oduyub qurtara bilenlerin siyahisin cixartmaq
-List<Debtor>? result = debtors.Where((d) =>
-{
+//19)Tesevvur edek ki,butun borclari olanlar bugunden etibaren her ay 500 azn pul odeyecekler.Oz ad gunune kimi borcun oduyub qurtara bilenlerin siyahisin cixartmaq
+//var result = debtors.Where((d) =>
+//{
+//    var month = Math.Abs(DateTime.Now.Month - d.BirthDay.Month);
+//    var r = month * 500;
+//    return d.Debt <= r;
+//}).ToList();
 
-    var month = Math.Abs(DateTime.Now.Month - d.BirthDay.Month);
-    var r = month * 500;
-    return d.Debt <= r;
-}.Tolist();
-
-result.ForEach((Debtor d) => Console.WriteLine(d));
-#endregion
-#region task 19
+//result.ForEach(d => Console.WriteLine(d));
 #endregion
 #region task 20
+//20)Adindaki ve familyasindaki herflerden "smile" sozunu yaza bileceyimiz borclularin siyahisini cixartmaq
+string Word = "smile";
+
+var debtorsWithTargetWord = debtors.Where(debtor =>
+{
+    string fullName = debtor.FullName.ToLower();
+    char[] targetChars = Word.ToCharArray();
+
+    foreach (char c in targetChars)
+    {
+        if (fullName.Count(ch => ch == c) < Word.Count(ch => ch == c))
+        {
+            return false;
+        }
+    }
+
+    return true;
+});
+
+foreach (var debtor in debtorsWithTargetWord)
+{
+    Console.WriteLine(debtor.FullName);
+}
 #endregion
